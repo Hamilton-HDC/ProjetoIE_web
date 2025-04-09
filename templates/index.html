@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Automação de Filiais</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #1e90ff;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0074e4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Automação de Filiais</h2>
+        <form action="/executar" method="post">
+            <label>Filial:</label>
+            <input type="number" name="filial" required><br><br>
+            <label>CPF:</label>
+            <input type="text" name="cpf"><br><br>
+            <label>Inscrição Estadual:</label>
+            <input type="text" name="inscricao"><br><br>
+            <label>Produto (código ou barra):</label>
+            <input type="text" name="produto"><br><br>
+            <label>Ação:</label>
+            <select name="acao">
+                <option value="inscricao">Alterar Inscrição Estadual</option>
+                <option value="intervencao">Realizar Intervenção</option>
+                <option value="desbloqueio">Desbloquear Produto</option>
+                <option value="derrubar">Derrubar Tabela PIP</option>
+            </select><br><br>
+            <button type="submit">Executar</button>
+        </form>
+    </div>
+</body>
+</html>
