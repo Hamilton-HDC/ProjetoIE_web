@@ -56,29 +56,86 @@
         button:hover {
             background-color: #0074e4;
         }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Automação de Filiais</h2>
+
+        <!-- Mensagem de sucesso -->
+        <div id="mensagem" class="success-message" style="display: none;">
+            Ação executada com sucesso!
+        </div>
+
         <form action="/executar" method="post">
             <label>Filial:</label>
             <input type="number" name="filial" required><br><br>
-            <label>CPF:</label>
-            <input type="text" name="cpf"><br><br>
-            <label>Inscrição Estadual:</label>
-            <input type="text" name="inscricao"><br><br>
-            <label>Produto (código ou barra):</label>
-            <input type="text" name="produto"><br><br>
+
+            <div id="cpfField" style="display: none;">
+                <label>CPF:</label>
+                <input type="text" name="cpf"><br><br>
+            </div>
+
+            <div id="inscricaoField" style="display: none;">
+                <label>Inscrição Estadual:</label>
+                <input type="text" name="inscricao"><br><br>
+            </div>
+
+            <div id="produtoField" style="display: none;">
+                <label>Produto (código ou barra):</label>
+                <input type="text" name="produto"><br><br>
+            </div>
+
             <label>Ação:</label>
-            <select name="acao">
+            <select name="acao" id="acao" onchange="atualizarCampos()">
                 <option value="inscricao">Alterar Inscrição Estadual</option>
                 <option value="intervencao">Realizar Intervenção</option>
                 <option value="desbloqueio">Desbloquear Produto</option>
                 <option value="derrubar">Derrubar Tabela PIP</option>
             </select><br><br>
+
             <button type="submit">Executar</button>
         </form>
     </div>
+
+    <script>
+        function atualizarCampos() {
+            const acao = document.getElementById("acao").value;
+
+            document.getElementById("cpfField").style.display = "none";
+            document.getElementById("inscricaoField").style.display = "none";
+            document.getElementById("produtoField").style.display = "none";
+
+            if (acao === "inscricao") {
+                document.getElementById("cpfField").style.display = "block";
+                document.getElementById("inscricaoField").style.display = "block";
+            } else if (acao === "desbloqueio") {
+                document.getElementById("produtoField").style.display = "block";
+            }
+        }
+
+        // Mostrar mensagem se tiver status=ok na URL
+        function verificarMensagemSucesso() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("status") === "ok") {
+                document.getElementById("mensagem").style.display = "block";
+            }
+        }
+
+        window.onload = function() {
+            atualizarCampos();
+            verificarMensagemSucesso();
+        };
+    </script>
 </body>
 </html>
